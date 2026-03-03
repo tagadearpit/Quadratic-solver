@@ -1,51 +1,61 @@
-function startCalculation() {
-    // 1. Get Values
+function handleSolve() {
     const a = parseFloat(document.getElementById('a').value);
     const b = parseFloat(document.getElementById('b').value);
     const c = parseFloat(document.getElementById('c').value);
 
-    // Validate inputs
+    // Basic Validation
     if (isNaN(a) || isNaN(b) || isNaN(c)) {
-        alert("Please enter all values");
+        alert("Please fill in all three fields (a, b, and c).");
         return;
     }
 
-    // 2. Show Animation & Hide old results
-    document.getElementById('result-container').classList.add('hidden');
+    if (a === 0) {
+        alert("The value of 'a' cannot be 0 in a quadratic equation.");
+        return;
+    }
+
+    // Reset UI for new calculation
+    document.getElementById('results').classList.add('hidden');
     document.getElementById('loader').classList.remove('hidden');
 
-    // 3. Wait 2 seconds (2000ms)
+    // Start 2 second delay for animation
     setTimeout(() => {
-        calculateRoots(a, b, c);
+        solveQuadratic(a, b, c);
     }, 2000);
 }
 
-function calculateRoots(a, b, c) {
-    const loader = document.getElementById('loader');
-    const resultBox = document.getElementById('result-container');
-    const x1Text = document.getElementById('x1');
-    const x2Text = document.getElementById('x2');
+function solveQuadratic(a, b, c) {
+    document.getElementById('loader').classList.add('hidden');
+    const resultsDiv = document.getElementById('results');
+    const r1Disp = document.getElementById('root1');
+    const r2Disp = document.getElementById('root2');
 
-    // Hide loader
-    loader.classList.add('hidden');
-
-    // Discriminant formula: D = b^2 - 4ac
+    // Formula: D = b^2 - 4ac
     const discriminant = (b * b) - (4 * a * c);
 
     if (discriminant > 0) {
-        let r1 = (-b + Math.sqrt(discriminant)) / (2 * a);
-        let r2 = (-b - Math.sqrt(discriminant)) / (2 * a);
-        x1Text.innerHTML = `Root 1: <b>${r1.toFixed(2)}</b>`;
-        x2Text.innerHTML = `Root 2: <b>${r2.toFixed(2)}</b>`;
-    } else if (discriminant === 0) {
-        let r = -b / (2 * a);
-        x1Text.innerHTML = `Real & Equal Root: <b>${r.toFixed(2)}</b>`;
-        x2Text.textContent = "";
-    } else {
-        x1Text.innerHTML = "No Real Roots";
-        x2Text.innerHTML = "(Complex numbers detected)";
+        let x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+        let x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+        r1Disp.innerHTML = `x₁ = <b>${x1.toFixed(2)}</b>`;
+        r2Disp.innerHTML = `x₂ = <b>${x2.toFixed(2)}</b>`;
+    } 
+    else if (discriminant === 0) {
+        let x = -b / (2 * a);
+        r1Disp.innerHTML = `Identical Root: <b>${x.toFixed(2)}</b>`;
+        r2Disp.textContent = "";
+    } 
+    else {
+        r1Disp.innerHTML = "<b>No Real Roots</b>";
+        r2Disp.textContent = "The roots are imaginary.";
     }
 
-    // Show result with animation
-    resultBox.classList.remove('hidden');
+    resultsDiv.classList.remove('hidden');
+}
+
+function resetAll() {
+    document.getElementById('a').value = '';
+    document.getElementById('b').value = '';
+    document.getElementById('c').value = '';
+    document.getElementById('results').classList.add('hidden');
+    document.getElementById('loader').classList.add('hidden');
 }
