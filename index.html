@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadratic Solver</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quadratic Solver</h1>
+        <p>Solve for $ax^2 + bx + c = 0$</p>
+        
+        <div class="input-group">
+            <input type="number" id="a" placeholder="a" required>
+            <input type="number" id="b" placeholder="b" required>
+            <input type="number" id="c" placeholder="c" required>
+        </div>
+
+        <button onclick="startCalculation()">Calculate Roots</button>
+
+        <div id="loader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Processing Math...</p>
+        </div>
+
+        <div id="result-container" class="result hidden">
+            <h3>Results:</h3>
+            <p id="x1"></p>
+            <p id="x2"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
